@@ -1,23 +1,27 @@
 import { AppComponent } from './app.component';
 
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
-import { NewsModule } from './news/news.module';
+import { HomeComponent } from './news/home.component';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: './news/news.module#NewsModule'
+    component: HomeComponent
+  },
+  {
+    path: ':id',
+    component: HomeComponent
   },
   {
     path: '**',
-    loadChildren: './news/news.module#NewsModule'
+    component: HomeComponent
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
