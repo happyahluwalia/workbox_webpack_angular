@@ -1,5 +1,5 @@
 import { NewsRoutingModule } from './news-routing';
-import { HomeComponent } from './home.component';
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -8,6 +8,6 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     NewsRoutingModule
   ],
-  declarations: [HomeComponent]
+  declarations: []
 })
 export class NewsModule { }
