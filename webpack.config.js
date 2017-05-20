@@ -16,10 +16,12 @@ const { AotPlugin } = require('@ngtools/webpack');
 
 const nodeModules = path.join(process.cwd(), 'node_modules');
 const entryPoints = ["inline","polyfills","sw-register","styles","vendor","main"];
-const baseHref = "http://localhost:4200";
-const deployUrl = "http://localhost:4200";
+const baseHref = "http://localhost:8191";
+const deployUrl = "http://localhost:8191";
 
+const workboxPlugin = require('workbox-webpack-plugin');
 
+const DIST_DIR = 'dist';
 
 
 module.exports = {
@@ -51,7 +53,7 @@ module.exports = {
   },
   "output": {
     "path": path.join(process.cwd(), "dist"),
-    "publicPath": "http://localhost:4200",
+    "publicPath": "http://localhost:8191",
     "filename": "[name].[chunkhash:20].bundle.js",
     "chunkFilename": "[id].[chunkhash:20].chunk.js"
   },
@@ -237,7 +239,7 @@ module.exports = {
     }
     }),
     new BaseHrefWebpackPlugin({
-      "baseHref": "http://localhost:4200"
+      "baseHref": "http://localhost:8191"
     }),
     new CommonsChunkPlugin({
       "name": "inline",
@@ -317,7 +319,15 @@ module.exports = {
       },
       "exclude": [],
       "tsConfigPath": "src\\tsconfig.app.json"
-    })
+    }),
+    new workboxPlugin({
+       globDirectory: DIST_DIR,
+       staticFileGlobs: ['**/*.{html,js,css}'],
+       swDest: path.join(DIST_DIR, 'sw.js'),
+       modifyUrlPrefix: {
+                          '/': ''
+                        }
+     })
   ],
   "node": {
     "fs": "empty",
