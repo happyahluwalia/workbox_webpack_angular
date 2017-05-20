@@ -326,7 +326,14 @@ module.exports = {
        swDest: path.join(DIST_DIR, 'sw.js'),
        modifyUrlPrefix: {
                           '/': ''
-                        }
+                        },
+        runtimeCaching: [{
+                urlPattern: /bbc-news/,
+                handler: 'cacheFirst',
+                name: 'bbc-cache',
+                maxEnteries: 10,
+                maxAgeSeconds: 300
+            }]
      })
   ],
   "node": {
